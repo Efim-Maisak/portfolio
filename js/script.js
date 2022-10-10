@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 document.addEventListener( 'DOMContentLoaded', function () {
 
     // Кастомный селект
@@ -318,6 +320,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
   const parentCardElement = document.querySelector('.projects-window');
   const spinnerCardElement = document.querySelector('.projects-window__spinner');
+  const baserowToken = process.env.BASEROW_TOKEN;
 
   let projectsData = {};
 
@@ -354,7 +357,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
     await fetch('https://api.baserow.io/api/database/rows/table/76335/?filter__field_569928__boolean=true', {
       method: 'GET',
       headers: {
-        'Authorization': 'Token xnhNvrP8Rpqa5Vr8bEIbIsPCCBC65vpE'
+        'Authorization': baserowToken
       }
     }).then( response => {
       return response.json();

@@ -1,7 +1,5 @@
 'use strict';
 
-require('dotenv').config();
-
 document.addEventListener( 'DOMContentLoaded', function () {
 
     // Кастомный селект
@@ -320,7 +318,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
   const parentCardElement = document.querySelector('.projects-window');
   const spinnerCardElement = document.querySelector('.projects-window__spinner');
-  const baserowToken = process.env.BASEROW_TOKEN;
 
   let projectsData = {};
 
@@ -354,31 +351,37 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
     spinnerCardElement.classList.add('show');
 
-    await fetch('https://api.baserow.io/api/database/rows/table/76335/?filter__field_569928__boolean=true', {
-      method: 'GET',
-      headers: {
-        'Authorization': baserowToken
-      }
-    }).then( response => {
-      return response.json();
-    }).then( data => {
-        spinnerCardElement.classList.remove('show');
-        parentCardElement.innerHTML = "";
-        projectsData =JSON.parse(JSON.stringify(data));
-        projectsData.results.forEach(item => {
+    try {
+      await fetch('https://api.baserow.io/api/database/rows/table/76335/?filter__field_569928__boolean=true', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Token xnhNvrP8Rpqa5Vr8bEIbIsPCCBC65vpE'
+        }
+      }).then( response => {
+        return response.json();
+      }).then( data => {
+          spinnerCardElement.classList.remove('show');
+          parentCardElement.innerHTML = "";
+          projectsData =JSON.parse(JSON.stringify(data));
+          projectsData.results.forEach(item => {
 
-          if(Array.isArray(item.field_569927) && item.field_569927.length == 0) {
-            item.field_569927[0] = {url: ''};
-          }
+            if(Array.isArray(item.field_569927) && item.field_569927.length == 0) {
+              item.field_569927[0] = {url: ''};
+            }
 
-          if(Array.isArray(item.field_463831) && item.field_463831.length == 0) {
-            item.field_463831[0] = {url: ''};
-          }
+            if(Array.isArray(item.field_463831) && item.field_463831.length == 0) {
+              item.field_463831[0] = {url: ''};
+            }
 
-          new ProjectCard(item.field_569927[0].url, 'project-picture', item.field_463831[0].url, item.field_463826, item.field_463830.value, item.field_463827, item.field_463829).renderCard();
+            new ProjectCard(item.field_569927[0].url, 'project-picture', item.field_463831[0].url, item.field_463826, item.field_463830.value, item.field_463827, item.field_463829).renderCard();
 
+          });
         });
-      });
+    } catch(e) {
+      new Error('POST request is failed');
+    }
+
+
 
   }
 

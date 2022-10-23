@@ -151,12 +151,14 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
     const menuLinks = document.querySelectorAll('.menu__link');
     const contentPanelChild = document.querySelectorAll('[data-menu]');
+    const introElement = document.querySelector('.intro');
 
     function pickMenuLink() {
 
         menuLinks.forEach((item, index) => {
             item.addEventListener('click', event => {
                 if(event.target == item) {
+                    introElement.style.display = 'none';
                     addClassHide();
                     contentPanelChild[index].classList.add('show');
                     contentPanelChild[index].classList.remove('hide');
@@ -267,13 +269,13 @@ document.addEventListener( 'DOMContentLoaded', function () {
                 });
 
                 const requestBody = {
-                    field_492636: formDataObj.subject,
-                    field_492637: formDataObj.message,
-                    field_492638: formDataObj.name,
-                    field_492640: formDataObj.email
+                    field_2995: formDataObj.subject,
+                    field_2996: formDataObj.message,
+                    field_2997: formDataObj.name,
+                    field_2998: formDataObj.email
                 };
 
-                fetch('https://coldnaked.herokuapp.com/webhook/postForm', {
+                fetch('https://n8n.coldnaked.ru/webhook/postForm', {
                     method: 'POST',
                     mode: 'no-cors',
                     body: JSON.stringify(requestBody)
@@ -352,10 +354,10 @@ document.addEventListener( 'DOMContentLoaded', function () {
     spinnerCardElement.classList.add('show');
 
     try {
-      await fetch('https://api.baserow.io/api/database/rows/table/76335/?filter__field_569928__boolean=true', {
+      await fetch('https://baserow.coldnaked.ru/api/database/rows/table/345/?filter__field_2994__boolean=true', {
         method: 'GET',
         headers: {
-          'Authorization': 'Token xnhNvrP8Rpqa5Vr8bEIbIsPCCBC65vpE'
+          'Authorization': 'Token xSqpRwvBMhHdF2iXZjndBuCbKIZ0yVTd'
         }
       }).then( response => {
         return response.json();
@@ -365,20 +367,20 @@ document.addEventListener( 'DOMContentLoaded', function () {
           projectsData =JSON.parse(JSON.stringify(data));
           projectsData.results.forEach(item => {
 
-            if(Array.isArray(item.field_569927) && item.field_569927.length == 0) {
-              item.field_569927[0] = {url: ''};
+            if(Array.isArray(item.field_2993) && item.field_2993.length == 0) {
+              item.field_2993[0] = {url: ''};
             }
 
-            if(Array.isArray(item.field_463831) && item.field_463831.length == 0) {
-              item.field_463831[0] = {url: ''};
+            if(Array.isArray(item.field_2992) && item.field_2992.length == 0) {
+              item.field_2992[0] = {url: ''};
             }
 
-            new ProjectCard(item.field_569927[0].url, 'project-picture', item.field_463831[0].url, item.field_463826, item.field_463830.value, item.field_463827, item.field_463829).renderCard();
+            new ProjectCard(item.field_2993[0].url, 'project-picture', item.field_2992[0].url, item.field_2988, item.field_2991.value, item.field_2989, item.field_2990).renderCard();
 
           });
         });
     } catch(e) {
-      new Error('POST request is failed');
+      new Error('GET request is failed');
     }
 
 
@@ -395,7 +397,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
     let filteredData = [];
 
     projectsData.results.forEach(item => {
-      if(item.field_463830.value == selectedOption) {
+      if(item.field_2991.value == selectedOption) {
         filteredData.push(item);
       }
     });
@@ -410,9 +412,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
         const projectsElem = document.createElement('div');
         projectsElem.innerHTML = `
           <div class="projects-card">
-            <div class="projects-card__image"><img src="${item.field_569927[0].url}" alt="project-picture"></div>
-            <div class="projects-card__title">${item.field_463826}</div>
-            <div class="projects-card__category"><span>${item.field_463830.value}</span></div>
+            <div class="projects-card__image"><img src="${item.field_2993[0].url}" alt="project-picture"></div>
+            <div class="projects-card__title">${item.field_2988}</div>
+            <div class="projects-card__category"><span>${item.field_2991.value}</span></div>
           </div>
         `;
         parentCardElement.append(projectsElem);
@@ -425,9 +427,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
         const projectsElem = document.createElement('div');
         projectsElem.innerHTML = `
           <div class="projects-card">
-            <div class="projects-card__image"><img src="${item.field_569927[0].url}" alt="project-picture"></div>
-            <div class="projects-card__title">${item.field_463826}</div>
-            <div class="projects-card__category"><span>${item.field_463830.value}</span></div>
+            <div class="projects-card__image"><img src="${item.field_2993[0].url}" alt="project-picture"></div>
+            <div class="projects-card__title">${item.field_2988}</div>
+            <div class="projects-card__category"><span>${item.field_2991.value}</span></div>
           </div>
         `;
         parentCardElement.append(projectsElem);
@@ -485,18 +487,18 @@ document.addEventListener( 'DOMContentLoaded', function () {
     if(document.querySelector('.select__toggle').getAttribute('data-index') > 0) {
       modalContentElement.innerHTML = `
       <button data-close class="modal__close-button"><img src="./img/modal/close.svg" width="18" alt="close"></button>
-      <div class="modal__image"><img src="${dataFiltered[index].field_463831[0].url}"></div>
-      <div class="modal__title">${dataFiltered[index].field_463826}</div>
-      <div class="modal__info">${dataFiltered[index].field_463827.replace(/\n\r?/g, '<br/>')}</div>
-      <div class="modal__link"><a target="_blank" style="color: #000" href="${dataFiltered[index].field_463829}">${dataFiltered[index].field_463829}</a></div>
+      <div class="modal__image"><img src="${dataFiltered[index].field_2992[0].url}"></div>
+      <div class="modal__title">${dataFiltered[index].field_2988}</div>
+      <div class="modal__info">${dataFiltered[index].field_2989.replace(/\n\r?/g, '<br/>')}</div>
+      <div class="modal__link"><a target="_blank" style="color: #000" href="${dataFiltered[index].field_2990}">${dataFiltered[index].field_2990}</a></div>
       `;
     } else {
       modalContentElement.innerHTML = `
       <button data-close class="modal__close-button"><img src="./img/modal/close.svg" width="18" alt="close"></button>
-      <div class="modal__image"><img src="${data.results[index].field_463831[0].url}"></div>
-      <div class="modal__title">${data.results[index].field_463826}</div>
-      <div class="modal__info">${data.results[index].field_463827.replace(/\n\r?/g, '<br/>')}</div>
-      <div class="modal__link"><a target="_blank" style="color: #000" href="${data.results[index].field_463829}">${data.results[index].field_463829}</a></div>
+      <div class="modal__image"><img src="${data.results[index].field_2992[0].url}"></div>
+      <div class="modal__title">${data.results[index].field_2988}</div>
+      <div class="modal__info">${data.results[index].field_2989.replace(/\n\r?/g, '<br/>')}</div>
+      <div class="modal__link"><a target="_blank" style="color: #000" href="${data.results[index].field_2990}">${data.results[index].field_2990}</a></div>
       `;
     }
     closeProjectModal(projectModal);

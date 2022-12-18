@@ -275,9 +275,12 @@ document.addEventListener( 'DOMContentLoaded', function () {
                     field_2998: formDataObj.email
                 };
 
-                fetch('https://n8n.coldnaked.ru/webhook/postForm', {
+                fetch('https://baserow.coldnaked.ru/api/database/rows/table/346/', {
                     method: 'POST',
-                    mode: 'no-cors',
+                    headers: {
+                      'Authorization': 'Token xSqpRwvBMhHdF2iXZjndBuCbKIZ0yVTd',
+                      'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(requestBody)
                 }).then( response => {
                     //console.log(response);

@@ -242,81 +242,80 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
   submitButton.classList.add('inactive');
 
-    function sendForm() {
+  function sendForm() {
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-            let formError = formValidation();
+        let formError = formValidation();
 
-            if(formError == 0) {
+        if(formError == 0) {
 
-                spinnerElement.src = message.loading;
+            spinnerElement.src = message.loading;
 
-                spinnerElement.style.cssText = `
-                    display: block;
-                    margin: 0 auto;
-                `;
+            spinnerElement.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
 
-                form.insertAdjacentElement("beforeend", spinnerElement);
+            form.insertAdjacentElement("beforeend", spinnerElement);
 
-                const formData = new FormData(form);
+            const formData = new FormData(form);
 
-                const formDataObj = {};
+            const formDataObj = {};
 
-                formData.forEach((value, key) => {
-                    formDataObj[key] = value;
-                });
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
 
-                const requestBody = {
-                    field_2995: formDataObj.subject,
-                    field_2996: formDataObj.message,
-                    field_2997: formDataObj.name,
-                    field_2998: formDataObj.email
-                };
+            const requestBody = {
+                field_2995: formDataObj.subject,
+                field_2996: formDataObj.message,
+                field_2997: formDataObj.name,
+                field_2998: formDataObj.email
+            };
 
-                fetch('https://baserow.coldnaked.ru/api/database/rows/table/346/', {
-                    method: 'POST',
-                    headers: {
-                      'Authorization': 'Token xSqpRwvBMhHdF2iXZjndBuCbKIZ0yVTd',
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                }).then( response => {
-                    //console.log(response);
-                    alertElement.classList.add('show');
-                    alertElement.classList.remove('hide');
-                    alertElement.querySelector('.alert__message').textContent = message.sucsess;
-                    alertElement.style.backgroundColor = '#088A68';
-                }).catch(() => {
-                    alertElement.classList.add('show');
-                    alertElement.classList.remove('hide');
-                    alertElement.querySelector('.alert__message').textContent = message.failure;
-                    alertElement.style.backgroundColor = '#ED2E38';
-                }).finally(() => {
-                    form.reset();
-                    spinnerElement.remove();
-                    setTimeout(() => {
-                        alertElement.classList.add('hide');
-                        alertElement.classList.remove('show');
-                    }, 3000);
-                });
-                } else {
-                    submitButton.classList.add('inactive');
-                    alertElement.classList.add('show');
-                    alertElement.classList.remove('hide');
-                    alertElement.querySelector('.alert__message').textContent = message.error;
-                    alertElement.style.backgroundColor = '#ED2E38';
+            fetch('https://baserow.coldnaked.ru/api/database/rows/table/346/', {
+                method: 'POST',
+                headers: {
+                  'Authorization': 'Token xSqpRwvBMhHdF2iXZjndBuCbKIZ0yVTd',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }).then( response => {
+                //console.log(response);
+                alertElement.classList.add('show');
+                alertElement.classList.remove('hide');
+                alertElement.querySelector('.alert__message').textContent = message.sucsess;
+                alertElement.style.backgroundColor = '#088A68';
+            }).catch(() => {
+                alertElement.classList.add('show');
+                alertElement.classList.remove('hide');
+                alertElement.querySelector('.alert__message').textContent = message.failure;
+                alertElement.style.backgroundColor = '#ED2E38';
+            }).finally(() => {
+                form.reset();
+                spinnerElement.remove();
                 setTimeout(() => {
                     alertElement.classList.add('hide');
                     alertElement.classList.remove('show');
                 }, 3000);
-            }
-        });
+            });
+            } else {
+                submitButton.classList.add('inactive');
+                alertElement.classList.add('show');
+                alertElement.classList.remove('hide');
+                alertElement.querySelector('.alert__message').textContent = message.error;
+                alertElement.style.backgroundColor = '#ED2E38';
+            setTimeout(() => {
+                alertElement.classList.add('hide');
+                alertElement.classList.remove('show');
+            }, 3000);
+        }
+    });
+  }
 
-    }
-
-    sendForm();
+  sendForm();
 
 
   // Отображение карточек проектов
@@ -385,9 +384,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
     } catch(e) {
       new Error('GET request is failed');
     }
-
-
-
   }
 
   // Фильтр карточек с проектами
@@ -479,7 +475,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
         }
       });
     });
-
   }
 
 
@@ -527,6 +522,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
     });
   }
 
+
   // Анимация прогресс бара
 
   const listElement = document.querySelectorAll('.about-me__list-item'),
@@ -553,8 +549,5 @@ document.addEventListener( 'DOMContentLoaded', function () {
       }
     });
   });
-
-
-
 
 });

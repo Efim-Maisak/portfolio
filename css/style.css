@@ -1391,11 +1391,14 @@ input:focus:-ms-input-placeholder {
     }
 
     .projects-filters {
+        padding-top: 30px;
         justify-content: center;
     }
 
     .projects-window {
         justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
     }
 
     .contact-me__wrapper {

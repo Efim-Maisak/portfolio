@@ -351,10 +351,16 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
   const projectModal = document.querySelector('.modal');
 
-  parentCardElement.addEventListener('DOMSubtreeModified', () => {
-    const projectsCards = document.querySelectorAll('.projects-card');
-    openProjectModal(projectsCards, projectModal);
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (mutation.type === 'childList' || mutation.type === 'subtree') {
+        const projectsCards = document.querySelectorAll('.projects-card');
+        openProjectModal(projectsCards, projectModal);
+      }
     });
+  });
+
+  observer.observe(parentCardElement, { childList: true, subtree: true });
 
 
   function openProjectModal(cardsElem , modalElem) {
@@ -429,15 +435,15 @@ document.addEventListener( 'DOMContentLoaded', function () {
           } else if(event.target.getAttribute('data-list-name') == "css") {
             progressBarElements[1].style.width = '80%';
           }else if(event.target.getAttribute('data-list-name') == "sass") {
-            progressBarElements[2].style.width = '60%';
+            progressBarElements[2].style.width = '50%';
           }else if(event.target.getAttribute('data-list-name') == "js") {
             progressBarElements[3].style.width = '70%';
-          }else if(event.target.getAttribute('data-list-name') == "json") {
-            progressBarElements[4].style.width = '90%';
           }else if(event.target.getAttribute('data-list-name') == "git") {
-            progressBarElements[5].style.width = '60%';
+            progressBarElements[4].style.width = '50%';
           }else if(event.target.getAttribute('data-list-name') == "react") {
-            progressBarElements[6].style.width = '50%';
+            progressBarElements[5].style.width = '70%';
+          }else if(event.target.getAttribute('data-list-name') == "type") {
+            progressBarElements[6].style.width = '20%';
           }
       }
     });

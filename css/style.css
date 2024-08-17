@@ -782,6 +782,8 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
     background: #0000;
     height: 30px;
     width: 30px;
+    margin-top: 5px;
+    margin-right: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -793,6 +795,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
     cursor: pointer;
     transition: 0.4s;
     outline: none;
+    transform-origin: center;
 }
 
 .modal__close-button:hover {

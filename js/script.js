@@ -1,6 +1,7 @@
 'use strict';
 import CustomSelect from "../components/customSelect/customSelect.js";
 import { baserowApiKey } from "../config/baserowConfig.js";
+import { baserowBaseUrl } from "../config/baserowConfig.js";
 
 
 document.addEventListener( 'DOMContentLoaded', function () {
@@ -248,10 +249,10 @@ document.addEventListener( 'DOMContentLoaded', function () {
     spinnerCardElement.classList.add('show');
 
     try {
-      await fetch('https://baserow.coldnaked.ru/api/database/rows/table/345/?filter__field_2994__boolean=true', {
+      await fetch(`${baserowBaseUrl}/rows/table/345/?filter__field_2994__boolean=true`, {
         method: 'GET',
         headers: {
-          'Authorization': baserowApiKey
+          "Authorization": baserowApiKey
         }
       }).then( response => {
         return response.json();
@@ -274,7 +275,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
           });
         });
     } catch(e) {
-      new Error('GET request is failed');
+      new Error("GET request is failed", e.message);
     }
   }
 
